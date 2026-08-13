@@ -21,9 +21,6 @@ os.makedirs('./models',  exist_ok=True)
 
 detector = None
 
-# Load model at import time so gunicorn workers have it ready
-load_detector()
-
 
 def load_detector():
     global detector
@@ -47,6 +44,10 @@ def load_detector():
     except Exception as e:
         print(f"✗ Could not load model: {e}")
         return False
+
+
+# Load model at import time so gunicorn workers have it ready.
+load_detector()
 
 
 def allowed_file(filename):
